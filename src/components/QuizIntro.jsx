@@ -97,7 +97,7 @@ export default function QuizIntro({ onFinish }) {
               className="text-2xl font-bold"
             >
               {correct
-                ? "VOCÊ ENTROU PRO TIME 🛸🔥"
+                ? "VOCÊ ENTROU PRO TIME! 🛸🔥"
                 : "DESGRAÇADO! 🤯 Vai estudar mais..."}
             </motion.div>
           )}
