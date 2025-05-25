@@ -5,7 +5,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Nunito Sans", ...defaultTheme.fontFamily.sans],
+        sans: ["Inter", "sans-serif"],
+        orbitron: ["Orbitron", "sans-serif"],
       },
       animation: {
         stars: "starsMove 60s linear infinite",
