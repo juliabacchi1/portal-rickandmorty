@@ -5,6 +5,7 @@ import CharacterDisplay from "./components/CharacterDisplay";
 import LogoTransition from "./components/LogoTransition";
 import { useGame } from "./context/GameContext";
 import GameHUD from "./components/GameHUD";
+import LevelUpToast from "./components/LevelUpToast";
 
 import axios from "axios";
 
@@ -47,8 +48,9 @@ function App() {
       {/* Fundo com estrelas animadas */}
       <div className="absolute inset-0 z-0 animate-stars bg-[radial-gradient(#ffffff22_1px,transparent_1px)] bg-[length:5px_6px]" />
 
-      {/* HUD visível apenas quando o jogo começou */}
+      {/* HUD e levelUp visíveis apenas quando o jogo começou */}
       {startGame && <GameHUD />}
+      {startGame && <LevelUpToast />}
 
       {/* Conteúdo principal sobre o fundo */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center">

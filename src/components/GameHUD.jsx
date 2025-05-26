@@ -1,5 +1,5 @@
 import { useGame } from "../context/GameContext";
-import { RocketIcon, FlaskConicalIcon, UsersIcon } from "lucide-react"; // ou qualquer outro ícone que você goste
+import { RocketIcon, FlaskConicalIcon, UsersIcon } from "lucide-react";
 
 const GameHUD = () => {
   const { score, level, discoveredCharacters } = useGame();
