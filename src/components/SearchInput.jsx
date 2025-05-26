@@ -12,11 +12,11 @@ export default function SearchInput({ onSearch }) {
   };
 
   return (
-    <>
+    <div className="relative mt-10 md:mt-0">
       <h1 className="text-[22px] md:text-4xl m-4 pt-6">
         Escolha seu personagem!
       </h1>
-      <form onSubmit={handleSubmit} className="flex gap-2 mb-4">
+      <form onSubmit={handleSubmit} className="flex gap-2 mb-4 justify-center">
         <input
           type="text"
           value={value}
@@ -32,6 +32,6 @@ export default function SearchInput({ onSearch }) {
           Buscar
         </button>
       </form>
-    </>
+    </div>
   );
 }

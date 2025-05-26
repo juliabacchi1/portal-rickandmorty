@@ -6,6 +6,7 @@ import LogoTransition from "./components/LogoTransition";
 import { useGame } from "./context/GameContext";
 import GameHUD from "./components/GameHUD";
 import LevelUpToast from "./components/LevelUpToast";
+import CardGallery from "./components/CardGallery"; // Importa aqui
 
 import axios from "axios";
 
@@ -14,7 +15,9 @@ function App() {
   const [character, setCharacter] = useState(null);
   const [error, setError] = useState(null);
   const [showLogo, setShowLogo] = useState(false);
-  const { addCharacter, score, level } = useGame();
+  const [showGallery, setShowGallery] = useState(false); // estado pra galeria
+
+  const { addCharacter } = useGame();
 
   const handleQuizFinish = () => {
     setShowLogo(true);
@@ -52,9 +55,21 @@ function App() {
       {startGame && <GameHUD />}
       {startGame && <LevelUpToast />}
 
-      {/* Conteúdo principal sobre o fundo */}
+      {/* Botão para abrir/fechar galeria */}
+      {startGame && (
+        <button
+          onClick={() => setShowGallery((v) => !v)}
+          className="fixed top-4 right-4 z-20 bg-green-900/80 text-green-200 py-1 px-3 rounded hover:bg-green-700 transition"
+        >
+          {showGallery ? "Voltar ao jogo" : "Abrir Galeria"}
+        </button>
+      )}
+
+      {/* Conteúdo principal */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center">
-        {showLogo ? (
+        {showGallery ? (
+          <CardGallery />
+        ) : showLogo ? (
           <LogoTransition onFinish={handleFinishLogo} />
         ) : !startGame ? (
           <QuizIntro onFinish={handleQuizFinish} />
