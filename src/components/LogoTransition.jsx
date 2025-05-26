@@ -1,18 +1,29 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function LogoTransition({ onFinish }) {
+  const [fadeOut, setFadeOut] = useState(false);
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      onFinish(); // chama a função que carrega a próxima tela
+    const fadeTimer = setTimeout(() => {
+      setFadeOut(true);
+    }, 1500);
+
+    const finishTimer = setTimeout(() => {
+      onFinish();
     }, 2000);
 
-    return () => clearTimeout(timer); // limpeza
+    return () => {
+      clearTimeout(fadeTimer);
+      clearTimeout(finishTimer);
+    };
   }, [onFinish]);
 
   return (
-    <div className="flex items-center justify-center h-screen bg-black z-50 fixed inset-0">
+    <div className="fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-500 pointer-events-none">
       <img
-        className="max-w-[200px] md:max-w-[300px]"
+        className={`max-w-[200px] md:max-w-[300px] transition-opacity duration-500 ${
+          fadeOut ? "opacity-0" : "opacity-100"
+        }`}
         src="/logo.webp"
         alt="Rick and Morty"
       />

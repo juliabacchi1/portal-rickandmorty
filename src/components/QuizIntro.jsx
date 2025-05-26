@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import GlitchCycleImage from "./GlitchCycleImage";
+import { getRandomQuote } from "../data/rickQuotes";
 
 const questions = [
   {
@@ -39,11 +40,12 @@ export default function QuizIntro({ onFinish }) {
   const [showResult, setShowResult] = useState(false);
   const [correct, setCorrect] = useState(false);
   const [selected, setSelected] = useState(null);
-  const [hideAll, setHideAll] = useState(false); // novo estado!
+  const [hideAll, setHideAll] = useState(false);
   const [index] = useState(Math.floor(Math.random() * questions.length));
   const q = questions[index];
-  const successSound = new Audio("/success.wav");
-  const failSound = new Audio("/fail.wav");
+
+  const successSound = useRef(new Audio("/success.wav"));
+  const failSound = useRef(new Audio("/fail.wav"));
 
   const handleAnswer = (option) => {
     setSelected(option);
@@ -51,9 +53,9 @@ export default function QuizIntro({ onFinish }) {
     setCorrect(isCorrect);
 
     if (isCorrect) {
-      successSound.play();
+      successSound.current.play();
     } else {
-      failSound.play();
+      failSound.current.play();
     }
 
     setTimeout(() => {
@@ -65,11 +67,10 @@ export default function QuizIntro({ onFinish }) {
     }, 1000);
   };
 
-  return (
-    <div className="min-h-screen bg-black flex items-center justify-center text-green-300 text-center px-4 relative overflow-hidden">
-      {/* Fundo com estrelas animadas */}
-      <div className="absolute inset-0 z-0 animate-stars bg-[radial-gradient(#ffffff22_1px,transparent_1px)] bg-[length:5px_6px]" />
+  const randomRickQuote = showResult ? getRandomQuote(correct) : null;
 
+  return (
+    <div className="flex items-center justify-center text-green-300 text-center px-4 relative">
       <AnimatePresence>
         {!hideAll && (
           <motion.div
@@ -118,11 +119,9 @@ export default function QuizIntro({ onFinish }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                className="text-4xl font-bold font-orbitron m-2"
+                className="text-2xl md:text-3xl font-orbitron m-2 max-w-md md:max-w-sm text-center"
               >
-                {correct
-                  ? "VOCÊ ENTROU PRO TIME 🛸🔥"
-                  : "DESGRAÇADO! Vai estudar mais..."}
+                {randomRickQuote}
               </motion.div>
             )}
           </motion.div>

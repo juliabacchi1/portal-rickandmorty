@@ -37,23 +37,36 @@ function App() {
   };
 
   return (
-    <>
-      {!startGame && !showLogo && <QuizIntro onFinish={handleQuizFinish} />}
+    <div className="min-h-screen bg-black text-green-300 px-4 relative overflow-hidden">
+      {/* Fundo com estrelas animadas */}
+      <div className="absolute inset-0 z-0 animate-stars bg-[radial-gradient(#ffffff22_1px,transparent_1px)] bg-[length:5px_6px]" />
 
-      {showLogo && <LogoTransition onFinish={handleFinishLogo} />}
+      {/* Conteúdo principal sobre o fundo */}
+      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center">
+        {showLogo ? (
+          <LogoTransition onFinish={handleFinishLogo} />
+        ) : !startGame ? (
+          <QuizIntro onFinish={handleQuizFinish} />
+        ) : (
+          <>
+            <SearchInput onSearch={handleSearch} />
 
-      {startGame && !showLogo && (
-        <div className="min-h-screen bg-black text-white flex flex-col items-center gap-y-2">
+            {error && (
+              <p
+                className="text-red-400 font-bold text-xl m-4 p-2 text-center"
+                aria-live="polite"
+              >
+                {error}
+              </p>
+            )}
 
-          <SearchInput onSearch={handleSearch} />
-
-          {error && <p className="text-red-400 font-bold text-xl m-4 p-2 text-center">{error}</p>}
-
-          {character && <CharacterDisplay character={character} />}
-        </div>
-      )}
-    </>
+            {character && <CharacterDisplay character={character} />}
+          </>
+        )}
+      </div>
+    </div>
   );
+
 }
 
 export default App;
