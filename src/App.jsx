@@ -2,12 +2,23 @@ import { useState } from "react";
 import QuizIntro from "./components/QuizIntro";
 import SearchInput from "./components/SearchInput";
 import CharacterDisplay from "./components/CharacterDisplay";
+import LogoTransition from "./components/LogoTransition";
 import axios from "axios";
 
 function App() {
   const [startGame, setStartGame] = useState(false);
   const [character, setCharacter] = useState(null);
   const [error, setError] = useState(null);
+  const [showLogo, setShowLogo] = useState(false);
+
+ const handleQuizFinish = () => {
+   setShowLogo(true);
+ };
+
+ const handleFinishLogo = () => {
+   setShowLogo(false);
+   setStartGame(true);
+ };
 
   const handleSearch = async (name) => {
     try {
@@ -19,26 +30,24 @@ function App() {
       setError(null);
     } catch (err) {
       setCharacter(null);
-      setError("Personagem não encontrado!");
+      setError(
+        "Ei, seu buraco negro da informação... Não achei nada aqui. Se vira!"
+      );
     }
   };
 
   return (
     <>
-      {!startGame ? (
-        <QuizIntro onFinish={() => setStartGame(true)} />
-      ) : (
+      {!startGame && !showLogo && <QuizIntro onFinish={handleQuizFinish} />}
+
+      {showLogo && <LogoTransition onFinish={handleFinishLogo} />}
+
+      {startGame && !showLogo && (
         <div className="min-h-screen bg-black text-white flex flex-col items-center gap-y-2">
-          <img
-            className="items-center max-w-[200px] md:max-w-[300px]"
-            src="/logo.webp"
-            alt="Título Rick and Morty"
-          />
-          <h1 className="text-2xl md:text-4xl mt-0 mb-3">Escolha seu personagem!</h1>
 
           <SearchInput onSearch={handleSearch} />
 
-          {error && <p className="text-red-400 font-bold">{error}</p>}
+          {error && <p className="text-red-400 font-bold text-xl m-4 p-2 text-center">{error}</p>}
 
           {character && <CharacterDisplay character={character} />}
         </div>
