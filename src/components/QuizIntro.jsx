@@ -119,7 +119,7 @@ export default function QuizIntro({ onFinish }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                className="text-2xl md:text-3xl font-orbitron m-2 max-w-md md:max-w-sm text-center"
+                className="text-2xl md:text-3xl m-2 max-w-md md:max-w-sm text-center"
               >
                 {randomRickQuote}
               </motion.div>

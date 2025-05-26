@@ -3,6 +3,9 @@ import QuizIntro from "./components/QuizIntro";
 import SearchInput from "./components/SearchInput";
 import CharacterDisplay from "./components/CharacterDisplay";
 import LogoTransition from "./components/LogoTransition";
+import { useGame } from "./context/GameContext";
+import GameHUD from "./components/GameHUD";
+
 import axios from "axios";
 
 function App() {
@@ -10,15 +13,16 @@ function App() {
   const [character, setCharacter] = useState(null);
   const [error, setError] = useState(null);
   const [showLogo, setShowLogo] = useState(false);
+  const { addCharacter, score, level } = useGame();
 
- const handleQuizFinish = () => {
-   setShowLogo(true);
- };
+  const handleQuizFinish = () => {
+    setShowLogo(true);
+  };
 
- const handleFinishLogo = () => {
-   setShowLogo(false);
-   setStartGame(true);
- };
+  const handleFinishLogo = () => {
+    setShowLogo(false);
+    setStartGame(true);
+  };
 
   const handleSearch = async (name) => {
     try {
@@ -28,6 +32,8 @@ function App() {
       const firstResult = response.data.results[0];
       setCharacter(firstResult);
       setError(null);
+
+      addCharacter(firstResult);
     } catch (err) {
       setCharacter(null);
       setError(
@@ -40,6 +46,9 @@ function App() {
     <div className="min-h-screen bg-black text-green-300 px-4 relative overflow-hidden">
       {/* Fundo com estrelas animadas */}
       <div className="absolute inset-0 z-0 animate-stars bg-[radial-gradient(#ffffff22_1px,transparent_1px)] bg-[length:5px_6px]" />
+
+      {/* HUD visível apenas quando o jogo começou */}
+      {startGame && <GameHUD />}
 
       {/* Conteúdo principal sobre o fundo */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center">
@@ -66,7 +75,6 @@ function App() {
       </div>
     </div>
   );
-
 }
 
 export default App;

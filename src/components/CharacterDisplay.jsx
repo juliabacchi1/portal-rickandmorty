@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 
 export default function CharacterDisplay({ character }) {
   return (
-    <div className="flex flex-col md:flex-row items-center gap-8 p-6 border border-green-500 rounded-xl bg-gradient-to-br from-black via-gray-900 to-black shadow-lg">
+    <div className="flex flex-col md:flex-row items-center gap-8 m-2 p-6 border border-green-500 rounded-xl bg-gradient-to-br from-black via-gray-900 to-black shadow-lg">
+
       {/* Personagem - tipo "lado esquerdo da luta" */}
       <motion.img
         src={character.image}
