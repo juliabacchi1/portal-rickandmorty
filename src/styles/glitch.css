@@ -1,0 +1,21 @@
+.glitch {
+  animation: glitch-effect 0.2s linear 1;
+}
+
+@keyframes glitch-effect {
+  0% {
+    filter: contrast(0.8) brightness(1.5) hue-rotate(20deg);
+    transform: translate(1px, -1px) skew(-1deg);
+    opacity: 0.7;
+  }
+  50% {
+    filter: contrast(1.2) hue-rotate(-10deg);
+    transform: translate(-1px, 1px) skew(2deg);
+    opacity: 0.3;
+  }
+  100% {
+    filter: none;
+    transform: none;
+    opacity: 1;
+  }
+}

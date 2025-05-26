@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import GlitchCycleImage from "./GlitchCycleImage";
 
 const questions = [
   {
@@ -80,12 +81,7 @@ export default function QuizIntro({ onFinish }) {
             className="relative z-10 flex flex-col md:flex-row items-center gap-8"
           >
             {/* Imagem */}
-            <motion.img
-              src="/hello.webp"
-              alt="Rick and Morty"
-              className="w-full max-w-[200px] md:max-w-[450px] select-none pointer-events-none"
-              layoutId="rick-image"
-            />
+            <GlitchCycleImage />
 
             {/* Quiz ou Resultado */}
             {!showResult ? (
@@ -122,11 +118,11 @@ export default function QuizIntro({ onFinish }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                className="text-2xl font-bold"
+                className="text-4xl font-bold font-orbitron m-2"
               >
                 {correct
                   ? "VOCÊ ENTROU PRO TIME 🛸🔥"
-                  : "DESGRAÇADO! 🤯 Vai estudar mais..."}
+                  : "DESGRAÇADO! Vai estudar mais..."}
               </motion.div>
             )}
           </motion.div>

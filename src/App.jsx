@@ -28,13 +28,13 @@ function App() {
       {!startGame ? (
         <QuizIntro onFinish={() => setStartGame(true)} />
       ) : (
-        <div className="min-h-screen bg-black text-white flex flex-col items-center gap-6">
+        <div className="min-h-screen bg-black text-white flex flex-col items-center gap-y-2">
           <img
-            className="items-center max-w-[200px] md:max-w-[350px]"
+            className="items-center max-w-[200px] md:max-w-[300px]"
             src="/logo.webp"
             alt="Título Rick and Morty"
           />
-          <h1 className="text-2xl md:text-4xl">Escolha seu personagem!</h1>
+          <h1 className="text-2xl md:text-4xl mt-0 mb-3">Escolha seu personagem!</h1>
 
           <SearchInput onSearch={handleSearch} />
 
