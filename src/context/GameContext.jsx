@@ -40,6 +40,7 @@ export const GameProvider = ({ children }) => {
   });
 
   const [levelUpMessage, setLevelUpMessage] = useState(null);
+  const [cardUnlockedMessage, setCardUnlockedMessage] = useState(null);
 
   useEffect(() => {
     const dataToSave = {
@@ -107,9 +108,10 @@ export const GameProvider = ({ children }) => {
         const newCard = getRandomAvailableCard();
         if (newCard) {
           addCollectedCard(newCard);
-          addAchievement(
-            `Você desbloqueou um card colecionável: ${newCard.name}`
-          );
+          const message = `🃏 Você desbloqueou um card colecionável: ${newCard.name}`;
+          addAchievement(message);
+          setCardUnlockedMessage(message);
+          setTimeout(() => setCardUnlockedMessage(null), 3000);
         }
       }
     }
@@ -127,6 +129,7 @@ export const GameProvider = ({ children }) => {
         addAchievement,
         addCollectedCard,
         levelUpMessage,
+        cardUnlockedMessage,
         availableCards,
       }}
     >

@@ -6,8 +6,8 @@ import LogoTransition from "./components/LogoTransition";
 import { useGame } from "./context/GameContext";
 import GameHUD from "./components/GameHUD";
 import LevelUpToast from "./components/LevelUpToast";
-import CardGallery from "./components/CardGallery"; // Importa aqui
-
+import CardGallery from "./components/CardGallery";
+import CardUnlockedToast from "./components/CardUnlockedToast";
 import axios from "axios";
 
 function App() {
@@ -15,9 +15,9 @@ function App() {
   const [character, setCharacter] = useState(null);
   const [error, setError] = useState(null);
   const [showLogo, setShowLogo] = useState(false);
-  const [showGallery, setShowGallery] = useState(false); // estado pra galeria
+  const [showGallery, setShowGallery] = useState(false);
 
-  const { addCharacter } = useGame();
+  const { addCharacter, levelUpMessage, cardUnlockedMessage } = useGame();
 
   const handleQuizFinish = () => {
     setShowLogo(true);
@@ -51,9 +51,10 @@ function App() {
       {/* Fundo com estrelas animadas */}
       <div className="absolute inset-0 z-0 animate-stars bg-[radial-gradient(#ffffff22_1px,transparent_1px)] bg-[length:5px_6px]" />
 
-      {/* HUD e levelUp visíveis apenas quando o jogo começou */}
+      {/* HUD e toasts visíveis apenas quando o jogo começou */}
       {startGame && <GameHUD />}
-      {startGame && <LevelUpToast />}
+      {startGame && levelUpMessage && <LevelUpToast />}
+      {startGame && cardUnlockedMessage && <CardUnlockedToast />}
 
       {/* Botão para abrir/fechar galeria */}
       {startGame && (
