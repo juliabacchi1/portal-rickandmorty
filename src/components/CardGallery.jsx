@@ -7,8 +7,8 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { useState } from "react";
 import { DownloadIcon, LockIcon } from "lucide-react";
+import { useState, useEffect } from "react";
 
 const SortableCard = ({ character, isLocked }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -55,9 +55,13 @@ const SortableCard = ({ character, isLocked }) => {
 };
 
 const CardGallery = () => {
-  const { collectedCards } = useGame();
+  const { availableCards, collectedCards } = useGame();
   const [orderedCards, setOrderedCards] = useState(collectedCards);
 
+  useEffect(() => {
+    setOrderedCards(collectedCards);
+  }, [collectedCards]);
+  
   const handleDragEnd = (event) => {
     const { active, over } = event;
     if (active.id !== over?.id) {
@@ -66,6 +70,10 @@ const CardGallery = () => {
       setOrderedCards(arrayMove(orderedCards, oldIndex, newIndex));
     }
   };
+
+  const lockedCards = availableCards.filter(
+    (card) => !collectedCards.some((c) => c.id === card.id)
+  );
 
   return (
     <div className="relative mt-10 md:mt-0">
@@ -85,17 +93,12 @@ const CardGallery = () => {
             ))}
 
             {/* Cards bloqueados estáticos */}
-            {[...Array(4)].map((_, i) => (
-              <div
-                key={`locked-${i}`}
-                className="rounded-xl p-2 border bg-green-900/20 backdrop-blur-md shadow-md opacity-30 blur-sm relative"
-              >
-                <div className="w-full h-40 bg-green-800/20 rounded-lg mb-2" />
-                <div className="h-4 w-2/3 bg-green-700/20 mx-auto mb-1 rounded" />
-                <div className="absolute top-2 right-2 text-green-300">
-                  <LockIcon size={16} />
-                </div>
-              </div>
+            {lockedCards.map((character) => (
+              <SortableCard
+                key={`locked-${character.id}`}
+                character={character}
+                isLocked={true}
+              />
             ))}
           </div>
         </SortableContext>

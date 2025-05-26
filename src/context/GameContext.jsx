@@ -1,34 +1,46 @@
 import { createContext, useContext, useState, useEffect } from "react";
 
 const GameContext = createContext();
-
 const LOCAL_STORAGE_KEY = "rickandmorty_game";
 
+// Lista fixa de cards disponíveis
+const availableCards = [
+  { id: 1, name: "Rick Sanchez", image: "/cards/1.webp" },
+  { id: 2, name: "Morty Smith", image: "/cards/2.webp" },
+  { id: 3, name: "Summer Smith", image: "/cards/3.webp" },
+  { id: 4, name: "Beth Smith", image: "/cards/4.webp" },
+  { id: 5, name: "Jerry Smith", image: "/cards/5.webp" },
+  { id: 6, name: "Abadango Cluster Princess", image: "/cards/6.webp" },
+];
+
 export const GameProvider = ({ children }) => {
-  // Tenta carregar do localStorage ou inicializa
   const [discoveredCharacters, setDiscoveredCharacters] = useState(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
     return saved ? JSON.parse(saved).discoveredCharacters : [];
   });
+
   const [score, setScore] = useState(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
     return saved ? JSON.parse(saved).score : 0;
   });
+
   const [level, setLevel] = useState(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
     return saved ? JSON.parse(saved).level : 1;
   });
+
   const [achievements, setAchievements] = useState(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
     return saved ? JSON.parse(saved).achievements : [];
   });
+
   const [collectedCards, setCollectedCards] = useState(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
     return saved ? JSON.parse(saved).collectedCards : [];
   });
+
   const [levelUpMessage, setLevelUpMessage] = useState(null);
 
-  // Salva tudo no localStorage sempre que algo mudar
   useEffect(() => {
     const dataToSave = {
       discoveredCharacters,
@@ -40,7 +52,6 @@ export const GameProvider = ({ children }) => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(dataToSave));
   }, [discoveredCharacters, score, level, achievements, collectedCards]);
 
-  // Atualiza o level baseado no score e total de personagens
   const updateLevel = (newScore) => {
     const totalCharacters = 826;
     const percentage = (newScore / (totalCharacters * 10)) * 100;
@@ -54,14 +65,11 @@ export const GameProvider = ({ children }) => {
     if (newLevel > level) {
       setLevel(newLevel);
       setLevelUpMessage(`🏆 Você alcançou o nível ${newLevel}!`);
-      // Depois de mostrar mensagem, limpa ela depois de alguns segundos (ex: 3s)
       setTimeout(() => setLevelUpMessage(null), 3000);
-      // Também pode salvar achievement de level, se quiser:
       addAchievement(`Nível ${newLevel} alcançado!`);
     }
   };
 
-  // Evita duplicatas nas conquistas
   const addAchievement = (achievement) => {
     setAchievements((prev) => {
       if (!prev.includes(achievement)) return [...prev, achievement];
@@ -69,7 +77,6 @@ export const GameProvider = ({ children }) => {
     });
   };
 
-  // Evita duplicatas nos cards colecionáveis
   const addCollectedCard = (card) => {
     setCollectedCards((prev) => {
       if (!prev.find((c) => c.id === card.id)) return [...prev, card];
@@ -77,26 +84,33 @@ export const GameProvider = ({ children }) => {
     });
   };
 
-  // Função para adicionar personagem descoberto, atualizar score, level e cards
+  const getRandomAvailableCard = () => {
+    const unlockedIds = collectedCards.map((card) => card.id);
+    const available = availableCards.filter(
+      (card) => !unlockedIds.includes(card.id)
+    );
+    if (available.length === 0) return null;
+    const randomIndex = Math.floor(Math.random() * available.length);
+    return available[randomIndex];
+  };
+
   const addCharacter = (character) => {
     if (!discoveredCharacters.includes(character.id)) {
-      setDiscoveredCharacters((prev) => [...prev, character.id]);
+      const newDiscovered = [...discoveredCharacters, character.id];
+      setDiscoveredCharacters(newDiscovered);
+
       const newScore = score + 10;
       setScore(newScore);
       updateLevel(newScore);
 
-      // Aqui podemos adicionar lógica pra dar cards a cada 4 personagens descobertos
-      const totalDiscovered = discoveredCharacters.length + 1;
-      if (totalDiscovered % 4 === 0) {
-        const newCard = {
-          id: character.id,
-          name: character.name,
-          image: character.image,
-        };
-        addCollectedCard(newCard);
-        addAchievement(
-          `Você desbloqueou um card colecionável: ${character.name}`
-        );
+      if (newDiscovered.length % 4 === 0) {
+        const newCard = getRandomAvailableCard();
+        if (newCard) {
+          addCollectedCard(newCard);
+          addAchievement(
+            `Você desbloqueou um card colecionável: ${newCard.name}`
+          );
+        }
       }
     }
   };
@@ -113,6 +127,7 @@ export const GameProvider = ({ children }) => {
         addAchievement,
         addCollectedCard,
         levelUpMessage,
+        availableCards,
       }}
     >
       {children}
