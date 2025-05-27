@@ -48,14 +48,11 @@ function App() {
 
   return (
     <div className="min-h-screen bg-black text-green-300 px-4 relative overflow-hidden">
-      {/* Fundo com estrelas animadas */}
       <div className="absolute inset-0 z-0 animate-stars bg-[radial-gradient(#ffffff22_1px,transparent_1px)] bg-[length:5px_6px]" />
-
       {/* HUD e toasts visíveis apenas quando o jogo começou */}
       {startGame && <GameHUD />}
       {startGame && levelUpMessage && <LevelUpToast />}
       {startGame && cardUnlockedMessage && <CardUnlockedToast />}
-
       {/* Botão para abrir/fechar galeria */}
       {startGame && (
         <button
@@ -65,7 +62,6 @@ function App() {
           {showGallery ? "Voltar ao jogo" : "Abrir Galeria"}
         </button>
       )}
-
       {/* Conteúdo principal */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen text-center">
         {showGallery ? (

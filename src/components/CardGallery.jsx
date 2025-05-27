@@ -35,7 +35,8 @@ const SortableCard = ({ character }) => {
       <img
         src={getCardImage(character.id)}
         alt={character.name}
-        className="w-full h-52 object-cover rounded-lg mb-2"
+        className="w-full h-52 object-contain rounded-lg mb-2 bg-green-950"
+        loading="lazy"
       />
       <h3 className="text-green-100 font-semibold text-sm">{character.name}</h3>
     </a>
@@ -50,7 +51,8 @@ const LockedCard = ({ character }) => (
     <img
       src={getCardImage(character.id)}
       alt={character.name}
-      className="w-full h-52 object-cover rounded-lg mb-2"
+      className="w-full h-52 object-contain rounded-lg mb-2 bg-green-950"
+      loading="lazy"
     />
     <h3 className="text-green-100 font-semibold text-sm">{character.name}</h3>
     <div className="absolute top-2 right-2 text-green-200">

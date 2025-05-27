@@ -26,6 +26,7 @@ export default function LogoTransition({ onFinish }) {
         }`}
         src="/logo.webp"
         alt="Rick and Morty"
+        loading="lazy"
       />
     </div>
   );
