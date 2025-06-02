@@ -7,7 +7,7 @@ Um projeto interativo e gamificado feito com React + Vite + TailwindCSS, inspira
 [![Deploy](https://img.shields.io/badge/Deploy-Vercel-purple)](https://portal-rickandmorty.vercel.app/)
 [![GitHub](https://img.shields.io/badge/GitHub-@juliabacchi1%2Fportal--rickandmorty-black?logo=github)](https://github.com/juliabacchi1/portal-rickandmorty)
 
-![Portal Screenshot](./public/screenshot.png)
+![Portal Screenshot](./public/screenshot.webp)
 
 ---
 
