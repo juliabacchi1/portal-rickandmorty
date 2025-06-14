@@ -81,7 +81,7 @@ Esse projeto faz parte do meu portfólio como desenvolvedora front-end e foi cri
 
 ## 🙋‍♀️ Feito por
 Julia Bacchi – desenvolvedora front-end apaixonada por inovação, sustentabilidade e boas ideias.
-[LinkedIn](https://www.linkedin.com/in/juliabacchi/) | [Portfólio](https://juliadev.vercel.app/)
+[LinkedIn](https://www.linkedin.com/in/juliabacchi/) | [Portfólio](https://juliabacchi.com)
 
 ## 🪄 Contribuições
 Quer contribuir com o projeto? Crie um fork, abra uma issue ou envie um pull request. Toda ajuda é bem-vinda! 💛
